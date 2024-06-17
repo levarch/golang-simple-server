@@ -1,0 +1,6 @@
+# binary folder
+bin/
+
+# MacOS stuff
+.DS_Store
+._*
