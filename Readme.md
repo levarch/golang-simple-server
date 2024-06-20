@@ -79,3 +79,14 @@ docker rmi -f $(docker images -aq)
 #   - all build cache
 docker system prune -a --volumes
 ```
+## Install Helm chart to local kubernetes
+
+```sh
+# list available k8s contexts
+kubectl config get-contexts
+
+# switch to needed context ( docker-desktop example )
+kubectl config use-context docker-desktop
+
+
+```
