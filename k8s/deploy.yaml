@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: my-web-server
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: my-web-server
@@ -36,4 +36,5 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-  type: ClusterIP
+      nodePort: 30001
+  type: NodePort

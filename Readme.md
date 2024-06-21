@@ -24,27 +24,30 @@ password: <generated_token_on_DockerHub>
 ## Docker build/tag, run
 
 ```sh
-docker build -t <hub-user>/<repo-name>:<tag> .
+# DockerHub image naming
+Image_Name=<hub-user>/<repo-name>:<tag>
+
+docker build -t $Image_Name .
 
 # local image check
-docker images | grep <hub-user>/<repo-name>:<tag>
+docker images | grep $Image_Name
 
 # run container locally
-docker run -p 8060:8080 <hub-user>/<repo-name>:<tag>
+docker run -d -p 8080:8080 $Image_Name
 
 # check running container
-docker ps | grep <hub-user>/<repo-name>:<tag>
+docker ps | grep $Image_Name
 
 # check with curl or browser page
-curl localhost:8060
+curl localhost:8080
 
 ```
 
 ## Check image vulnerabilities with Scout
 
 ```sh
-docker scout quickview <hub-user>/<repo-name>:<tag>
-docker scout cves <hub-user>/<repo-name>:<tag>
+docker scout quickview $Image_Name
+docker scout cves $Image_Name
 ```
 
 ## Docker push or pull images from DockerHub repository
@@ -54,12 +57,12 @@ docker scout cves <hub-user>/<repo-name>:<tag>
 # https://hub.docker.com/repositories/<hub-user>
 
 # push tagged image to DockerHub
-docker push <hub-user>/<repo-name>:<tag>
+docker push $Image_Name
 
 # docker pull image from DockerHub repo
-docker pull <hub-user>/<repo-name>:<tag>
+docker pull $Image_Name
 # or 
-docker run <hub-user>/<repo-name>:<tag>
+docker run $Image_Name
 ```
 
 ### Docker clean up
@@ -79,14 +82,15 @@ docker rmi -f $(docker images -aq)
 #   - all build cache
 docker system prune -a --volumes
 ```
-## Install Helm chart to local kubernetes
+## Deploy service to local k8s
 
 ```sh
-# list available k8s contexts
-kubectl config get-contexts
-
 # switch to needed context ( docker-desktop example )
 kubectl config use-context docker-desktop
 
+# deploy 3 pods and expose service on :30001 port
+kubectl apply -f ./k8s/deploy.yaml
 
+# service healthcheck with curl or open UI on default browser tab
+curl -ILfSs http://localhost:30001
 ```
