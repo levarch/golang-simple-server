@@ -13,6 +13,20 @@ go build -o bin/app src/main.go
 curl localhost:8080
 ```
 
+## Commit and push
+
+```sh
+# commit changes
+git add . && git commit -m " Commit changes "
+
+# automatic deployment to Google Run (manual testіng)
+git push origin
+
+# addition for new docker image build ( k8s and production usage )
+git tag -a v1.x.x -m " New functionality added "
+git push origin v1.x.x
+```
+
 ## local Docker authentication to DockerHub
 
 ```sh
